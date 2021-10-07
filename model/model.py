@@ -49,4 +49,4 @@ class PCCoder(BaseModel):
         statement_pred, drop_pred, _ = self.forward(x)
         statement_probs = F.softmax(statement_pred, dim=1).data
         drop_indx = np.argmax(drop_pred.data.cpu().numpy(), axis=-1)
-        return np.argsort(statement_probs.cpu().numpy()), statement_probs, drop_indx
+        return np.argsort(statement_probs.cpu().numpy()), np.array(statement_probs), drop_indx
