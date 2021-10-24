@@ -16,7 +16,7 @@ Second, to generate Erroneous programs:
 python3.6 makeErrorFile.py data/test_dataset_10 10
 ```
 
-## Repair codes
+## Repair
 We use PCCoder using default predictor for next statement. If you want to change the predictor, change the model name and the location of model in repair.py line 7, 8
 For example, to repair data/changed_test_dataset_5_three with length 5 and 3 errors:
 ```
