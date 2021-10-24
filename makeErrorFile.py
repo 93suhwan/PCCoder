@@ -150,3 +150,4 @@ for i in range(len(lines)):
     data['program'], data['changedOp'] = '|'.join(results[0]), results[1]
     with open('./data/changed_test_dataset_' + args.max_prog_leng + '_' + leng[l], 'a') as outFile:
       outFile.write(json.dumps(data) + '\n')
+

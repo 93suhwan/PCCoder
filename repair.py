@@ -3,10 +3,9 @@ from model.model import PCCoder
 from scripts.solve_problems import load_problems, solve_problems
 import argparse
 
-thresholds = [1, 2, 3, 4, 5, 6, 7, 8, 9]
-#thresholds = [10, 20, 30, 40, 50]
+thresholds = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 20, 30, 40, 50]
 model = PCCoder()
-model.load('./createdModel/model.39')
+model.load('./createdModel/model')
 model.eval()
 
 parser = argparse.ArgumentParser()
