@@ -2,6 +2,15 @@ import env.operator as op
 import itertools
 import random
 from dsl.impl import FIRST_ORDER_FUNCTIONS, HIGHER_ORDER_FUNCTIONS
+import json
+import copy
+import argparse
+
+parser = argparse.ArgumentParser()
+parser.add_argument('input_path', type=str)
+parser.add_argument('max_prog_leng', type=str)
+
+args = parser.parse_args()
 
 def cart(func, lambd):
   lst = []
@@ -31,6 +40,12 @@ def changeOp(progList, changedOp, length, changeNum):
       continue
     else:
       break
+  L2LOP = ['REVERSE', 'SORT'] \
+          + cart(['MAP'], I2I) + cart(['FILTER'], I2B) + cart(['SCAN1L'], I2I2I) \
+          + argInt('TAKE', rNum2) + argInt('DROP', rNum2)
+
+  L2IOP = ['HEAD', 'TAIL', 'MINIMUM', 'MAXIMUM', 'SUM'] \
+          + cart(['COUNT'], I2B) + argInt('ACCESS', rNum2)
 
   funcArgs = progList[rNum].split(',')
 
@@ -76,16 +91,6 @@ def changeOp(progList, changedOp, length, changeNum):
 
   return changeOp(progList, changedOp, length, changeNum)
 
-import json
-import copy
-import argparse
-
-parser = argparse.ArgumentParser()
-parser.add_argument('input_path', type=str)
-parser.add_argument('max_prog_leng', type=str)
-
-args = parser.parse_args()
-
 L2I = ['HEAD', 'TAIL', 'MINIMUM', 'MAXIMUM', 'SUM', 'ACCESS', 'COUNT']
 L2L = ['MAP', 'FILTER', 'SCAN1L', 'REVERSE', 'SORT', 'TAKE', 'DROP']
 L2L2L = ['ZIPWITH']
@@ -93,13 +98,6 @@ L2L2L = ['ZIPWITH']
 I2I = ["+1", "-1", "*2", "/2", "*-1", "**2", "*3", "/3", "*4", "/4"]
 I2B = [">0", "<0", "EVEN", "ODD"]
 I2I2I = ["+", "-", "*", "max", "min"]
-
-L2LOP = ['REVERSE', 'SORT'] \
-        + cart(['MAP'], I2I) + cart(['FILTER'], I2B) + cart(['SCAN1L'], I2I2I) \
-        + argInt('TAKE', int(args.max_prog_leng)) + argInt('DROP', int(args.max_prog_leng))
-
-L2IOP = ['HEAD', 'TAIL', 'MINIMUM', 'MAXIMUM', 'SUM'] \
-        + cart(['COUNT'], I2B) + argInt('ACCESS', int(args.max_prog_leng))
 
 L2L2LOP = cart(L2L2L, I2I2I)
 
@@ -111,6 +109,8 @@ leng1 = ['six', 'seven', 'eight']
 leng2 = ['nine', 'ten']
 leng3 = ['eleven', 'twelve']
 leng4 = ['thirteen', 'fourteen']
+leng5 = ['fifteen']
+leng6 = ['sixteen']
 
 if args.max_prog_leng == '8':
   leng += leng1
@@ -126,6 +126,19 @@ elif args.max_prog_leng == '14':
   leng += leng2
   leng += leng3
   leng += leng4
+elif args.max_prog_leng == '15':
+  leng += leng1
+  leng += leng2
+  leng += leng3
+  leng += leng4
+  leng += leng5
+elif args.max_prog_leng == '16':
+  leng += leng1
+  leng += leng2
+  leng += leng3
+  leng += leng4
+  leng += leng5
+  leng += leng6
             
 for i in range(len(lines)):
   data = json.loads(lines[i].rstrip())

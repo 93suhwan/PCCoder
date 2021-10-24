@@ -94,7 +94,8 @@ def dfs_repair(env, max_depth, model, width, timeout, userProgram, threshold):
 
         userStatementIdx = statement_to_index[userProgram.statements[len(statements)]]
         if userStatementIdx in statement_pred[-threshold:]:
-            statement_pred = np.append(np.setdiff1d(statement_pred, np.array([userStatementIdx])), userStatementIdx)
+            idx = np.argwhere(statement_pred==userStatementIdx)
+            statement_pred = np.append(np.delete(statement_pred, idx), userStatementIdx)
 
         num_tries = 0
         for statement_index in reversed(statement_pred[-width:]):
@@ -262,8 +263,9 @@ def beam_search_repair(env, max_depth, model, beam_size, expansion_size, state, 
             userStatementIdx = statement_to_index[copiedUserProgram.statements[len(statements)]]
 
             if userStatementIdx in statement_pred[beam_num, -threshold]:
-                statement_pred[beam_num] = np.append(np.setdiff1d(statement_pred[beam_num], np.array([userStatementIdx])), userStatementIdx)
-                statement_probs[beam_num, userStatementIdx] = 1
+                idx = np.argwhere(statement_pred[beam_num]==userStatementIdx)
+                statement_pred[beam_num] = np.append(np.delete(statement_pred[beam_num], idx), userStatementIdx)
+                statement_probs[beam_num, userStatementIdx] = 5
 
             for number, statement_index in enumerate(reversed(statement_pred[beam_num, -expansion_size:])):
                 statement = index_to_statement[statement_index]

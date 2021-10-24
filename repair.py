@@ -24,7 +24,7 @@ for error in errors:
       problems = load_problems('./data/changed_test_dataset_' + args.max_prog_leng + '_' + error)
                                     
       print(threshold)
-      res = solve_problems(problems, 'beam_repair', model, 20, int(args.max_prog_leng), 819200, 16, threshold)
+      res = solve_problems(problems, 'beam_repair', model, 5, int(args.max_prog_leng), 819200, 16, threshold)
       print("")
 
       solved = len([x for x in res if x['result'] != 'Failed'])
